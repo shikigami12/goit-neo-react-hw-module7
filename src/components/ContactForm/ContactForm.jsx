@@ -3,31 +3,31 @@ import * as Yup from 'yup';
 import css from './ContactForm.module.css';
 import { useId } from 'react';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contactsSlice';
+import { addContact } from '../../redux/contactsOps';
 
 const validationSchema = Yup.object({
   name: Yup.string()
     .min(3, 'Name must be at least 3 characters')
     .max(50, 'Name must be less than 50 characters')
     .required('Name is required'),
-  phone: Yup.string()
-    .min(3, 'Phone must be at least 3 characters')
-    .max(50, 'Phone must be less than 50 characters')
-    .required('Phone is required'),
+  number: Yup.string()
+    .min(3, 'Number must be at least 3 characters')
+    .max(50, 'Number must be less than 50 characters')
+    .required('Number is required'),
 });
 
 export const ContactForm = () => {
   const nameId = useId();
-  const phoneId = useId();
+  const numberId = useId();
   const dispatch = useDispatch();
 
   return (
     <div className={css.container}>
       <Formik
-        initialValues={{ name: '', phone: '' }}
+        initialValues={{ name: '', number: '' }}
         validationSchema={validationSchema}
         onSubmit={(values, { resetForm }) => {
-          dispatch(addContact({ name: values.name, phone: values.phone }));
+          dispatch(addContact({ name: values.name, number: values.number }));
           resetForm();
         }}
       >
@@ -44,10 +44,10 @@ export const ContactForm = () => {
             </div>
 
             <div className={css.formGroup}>
-              <label htmlFor={phoneId}>Phone</label>
-              <Field type="text" name="phone" id={phoneId} />
+              <label htmlFor={numberId}>Number</label>
+              <Field type="text" name="number" id={numberId} />
               <ErrorMessage
-                name="phone"
+                name="number"
                 component="div"
                 className={css.errorMessage}
               />
